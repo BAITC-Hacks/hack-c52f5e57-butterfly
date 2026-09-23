@@ -36,3 +36,18 @@ Deadline changed by user to 18:00 Almaty (13:00 UTC), with 15 minutes remaining.
 The user also explicitly requested publishing this build to main. Remaining time
 is reserved for integration verification, release documentation and push; model
 reinstallation and optional features are out of scope for this cut.
+
+## S4 — integration hardening
+
+Independent performance review preceded architecture review (docs/final-review.md).
+Seven release tests cover Telegram ownership/configuration/confirmation, concurrent
+send deduplication, uncertain delivery, Fly route allowlist, CORS/body bounds and
+literal environment parsing. No live Telegram message was sent by tests.
+`go test -race ./...` and `go vet ./...` passed after provider integration and
+isolation fixes. Hosted AI keys and POSTGRES_DSN are cleared in plugin children.
+Three.js 0.160.0 and its license are now local assets for the existing Fly view.
+
+Coverage remains below the full default 80% gate; exact measurements are in the
+review. A public HTTPS Brev backend and Vercel E2E are not verified. The supplied
+other-session Riva/Nemotron smoke is preserved as historical evidence, not relabeled
+as a new application run. S3 was published to main as ac6f07c with fast-forward push.
