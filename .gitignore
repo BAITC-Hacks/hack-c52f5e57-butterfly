@@ -1,0 +1,12 @@
+# Local credentials
+.env
+.env.*
+!.env.example
+
+# User-provided recordings, reference protocols, and evaluation output
+data/test/
+data/results/
+
+# Tool-owned runtime; publish snapshots under docs/research instead.
+evals/
+logs/

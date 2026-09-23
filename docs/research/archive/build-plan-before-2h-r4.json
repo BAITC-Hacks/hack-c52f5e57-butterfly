@@ -1,0 +1,71 @@
+{
+  "slug": "butterfly-meeting-minutes",
+  "revision": 4,
+  "task": "Постановочная встреча → проверяемый протокол и поручения RU/KK/mixed. Внешний frontend Vercel в финале; self-hosted inference на Brev, баланс 50 USD со слов пользователя, без личного GPU. Deadline неизвестен, timeboxes предварительные. Запрет внешних AI API; Fly и Telegram optional.",
+  "mandatory_scenario": {
+    "command": "Открыть демо, загрузить запись, дождаться анализа, сопоставить спикеров, проверить поручения по цитатам и скачать PDF/DOCX",
+    "expected": "Реальный self-hosted transcript с таймкодами/спикерами; summary; action/assignee/deadline с evidence и needs_review; читаемые PDF/DOCX. Core работает без Fly/Telegram; финальный frontend на Vercel, inference на Brev.",
+    "input": "Постановочная запись встречи RU/KK/mixed, roster, дата встречи и timezone; тестовый эталон ответственных и сроков"
+  },
+  "stages": [
+    {
+      "id": "S0",
+      "goal": "Зафиксировать обязательный сценарий, запрет внешнего inference, Brev 50 USD, отсутствие личного GPU и Vercel в финале",
+      "status": "done",
+      "evidence": [
+        "docs/research/meeting-minutes-source.txt",
+        "docs/research/source-metadata.json",
+        "reports/build-plan-butterfly-meeting-minutes-20260923-114419.004.md",
+        "user: Brev balance 50 USD, no personal GPU, Vercel at end"
+      ],
+      "timebox_minutes": 20
+    },
+    {
+      "id": "S1",
+      "goal": "Сопоставить self-hosted ASR/diarization/LLM, Fly и Telegram с первичными источниками",
+      "status": "done",
+      "evidence": [
+        "reports/theme-research-butterfly-meeting-minutes-20260923-114307.252.md",
+        "hk-7af54d0547f43ca9",
+        "hk-f4c1aa333c58e005",
+        "docs/research/corpus-evidence.json"
+      ],
+      "timebox_minutes": 30
+    },
+    {
+      "id": "S2",
+      "goal": "Предыдущий бюджет S2–S6 признан неприменимым: нужен re-cut до 120 минут, включая 45 минут freeze/demo; сохранить историю и перенести доказательства S0/S1.",
+      "status": "failed",
+      "evidence": [
+        "user 2026-09-23: deadline 2 hours; previous remaining timeboxes 45+120+60+60+45=330 minutes exceed 120 minutes",
+        "user 2026-09-23: Telegram integration, NVIDIA Nemotron on Brev, Fly innovation demo are required for public demo"
+      ],
+      "timebox_minutes": 45
+    },
+    {
+      "id": "S3",
+      "goal": "Получить вертикальный сценарий на GPU Brev: upload → ASR → speakers → actions → PDF/DOCX",
+      "status": "todo",
+      "timebox_minutes": 120
+    },
+    {
+      "id": "S4",
+      "goal": "Подключить Fly к событиям проверки и Telegram к разрешённым уведомлениям",
+      "status": "todo",
+      "timebox_minutes": 60
+    },
+    {
+      "id": "S5",
+      "goal": "Проверить качество, границы доступа, экспорт и переносимость offline",
+      "status": "todo",
+      "timebox_minutes": 60
+    },
+    {
+      "id": "S6",
+      "goal": "В финале опубликовать frontend на Vercel и проверить полный сценарий по внешней ссылке",
+      "status": "todo",
+      "timebox_minutes": 45
+    }
+  ],
+  "updated_at": "2026-09-23T12:05:15.959402682Z"
+}

@@ -3,71 +3,113 @@
   "data": {
     "current_stage": {
       "id": "S2",
-      "goal": "Подготовить переносимый frontend/API/worker и manifest моделей с тестовыми контрактами",
-      "status": "todo",
-      "timebox_minutes": 45
+      "goal": "Подготовить выбранный Nemotron Voice Agent multilingual-assistant/single-gpu на Brev; затем переносимый meeting API/frontend и контракты проверки. Приоритет — скорость запуска готового стека.",
+      "status": "doing",
+      "evidence": [
+        "reports/build-plan-butterfly-meeting-minutes-2h-nemotron-tg-fly-20260923-120728.897.md",
+        "hk-97ae81a8fa68dc5a: prior S2 failed because 330-minute budget invalidated by 120-minute deadline",
+        "re-cut via plan.create(overwrite=true), same slug; previous generation r4 archived; current timeboxes 15+30+20+10+45=120; reserve=S6",
+        "user 2026-09-23: кодируй, Nemotron интегрируем в конце, другая сессия настраивает его",
+        "workspace inspection: application code absent; README.md and docs/deployment/brev-gpu.md concurrently edited by other session; leave those files to it",
+        "user 2026-09-23: стоп сборке; сначала загрузить в GitHub, команду кодирования пользователь отправит отдельно",
+        "No application files written. Nemotron setup delegated by user to a separate existing session; integration postponed to end.",
+        "reports/devops-report-butterfly-nemotron-launch-preparation-20260923-121151.827.md",
+        "docs/deployment/brev-gpu.md",
+        "user: selected Nemotron Voice Agent and provided two recordings with reference protocols",
+        "VM Running; Jupyter GPU/Docker preflight passed; HF_TOKEN input pending; no inference verified"
+      ],
+      "timebox_minutes": 15
     },
     "path": "evals/plans/butterfly-meeting-minutes.json",
-    "revision": 3,
+    "revision": 10,
     "slug": "butterfly-meeting-minutes",
     "stages": [
       {
         "id": "S0",
-        "goal": "Зафиксировать обязательный сценарий, запрет внешнего inference, Brev 50 USD, отсутствие личного GPU и Vercel в финале",
+        "goal": "Outcome: зафиксированы ТЗ, сценарий и лимит 120 минут; self-hosted inference Brev, $50, без личного GPU, Vercel в финале.",
         "status": "done",
         "evidence": [
           "docs/research/meeting-minutes-source.txt",
           "docs/research/source-metadata.json",
           "reports/build-plan-butterfly-meeting-minutes-20260923-114419.004.md",
-          "user: Brev balance 50 USD, no personal GPU, Vercel at end"
-        ],
-        "timebox_minutes": 20
+          "user: Brev balance 50 USD, no personal GPU, Vercel at end",
+          "docs/research/archive/build-plan-before-2h-r4.json: retained documentary evidence; no runtime success claimed",
+          "reports/build-plan-butterfly-meeting-minutes-2h-nemotron-tg-fly-20260923-120728.897.md",
+          "user 2026-09-23: 2 hours; 75 build/evaluation + 45 finalization minutes"
+        ]
       },
       {
         "id": "S1",
-        "goal": "Сопоставить self-hosted ASR/diarization/LLM, Fly и Telegram с первичными источниками",
+        "goal": "Discovery: готовый research с источниками; дополнение Nemotron/Brev и обязательные Telegram/Fly demo. Качество и runtime остаются непроверенными.",
         "status": "done",
         "evidence": [
           "reports/theme-research-butterfly-meeting-minutes-20260923-114307.252.md",
           "hk-7af54d0547f43ca9",
           "hk-f4c1aa333c58e005",
-          "docs/research/corpus-evidence.json"
+          "docs/research/corpus-evidence.json",
+          "docs/research/archive/build-plan-before-2h-r4.json: retained documentary evidence; no runtime success claimed",
+          "reports/build-plan-butterfly-meeting-minutes-2h-nemotron-tg-fly-20260923-120728.897.md",
+          "NVIDIA model card + Brev NIM docs inspected 2026-09-23; RU/KK quality and actual GPU fit unverified"
+        ]
+      },
+      {
+        "id": "S2",
+        "goal": "Подготовить выбранный Nemotron Voice Agent multilingual-assistant/single-gpu на Brev; затем переносимый meeting API/frontend и контракты проверки. Приоритет — скорость запуска готового стека.",
+        "status": "doing",
+        "evidence": [
+          "reports/build-plan-butterfly-meeting-minutes-2h-nemotron-tg-fly-20260923-120728.897.md",
+          "hk-97ae81a8fa68dc5a: prior S2 failed because 330-minute budget invalidated by 120-minute deadline",
+          "re-cut via plan.create(overwrite=true), same slug; previous generation r4 archived; current timeboxes 15+30+20+10+45=120; reserve=S6",
+          "user 2026-09-23: кодируй, Nemotron интегрируем в конце, другая сессия настраивает его",
+          "workspace inspection: application code absent; README.md and docs/deployment/brev-gpu.md concurrently edited by other session; leave those files to it",
+          "user 2026-09-23: стоп сборке; сначала загрузить в GitHub, команду кодирования пользователь отправит отдельно",
+          "No application files written. Nemotron setup delegated by user to a separate existing session; integration postponed to end.",
+          "reports/devops-report-butterfly-nemotron-launch-preparation-20260923-121151.827.md",
+          "docs/deployment/brev-gpu.md",
+          "user: selected Nemotron Voice Agent and provided two recordings with reference protocols",
+          "VM Running; Jupyter GPU/Docker preflight passed; HF_TOKEN input pending; no inference verified"
+        ],
+        "timebox_minutes": 15
+      },
+      {
+        "id": "S3",
+        "goal": "Vertical slice (T+15…45): upload/хранение/manual transcript/review/PDF/DOCX на явно помеченном demo/manual input; local API-tests и экспорты. Audio без ASR честно ожидает провайдера; это не live inference.",
+        "status": "todo",
+        "evidence": [
+          "reports/devops-report-butterfly-nemotron-launch-preparation-20260923-121151.827.md",
+          "docs/deployment/brev-gpu.md",
+          "user: selected Nemotron Voice Agent and provided two recordings with reference protocols",
+          "VM Running; Jupyter GPU/Docker preflight passed; HF_TOKEN input pending; no inference verified",
+          "user 2026-09-23: Nemotron интегрируем в конце, его настраивает другая сессия; сборку начать отдельной командой после публикации плана",
+          "docs/research/build-plan-meeting-minutes.md updated handoff and stage order; no runtime success claimed"
         ],
         "timebox_minutes": 30
       },
       {
-        "id": "S2",
-        "goal": "Подготовить переносимый frontend/API/worker и manifest моделей с тестовыми контрактами",
-        "status": "todo",
-        "timebox_minutes": 45
-      },
-      {
-        "id": "S3",
-        "goal": "Получить вертикальный сценарий на GPU Brev: upload → ASR → speakers → actions → PDF/DOCX",
-        "status": "todo",
-        "timebox_minutes": 120
-      },
-      {
         "id": "S4",
-        "goal": "Подключить Fly к событиям проверки и Telegram к разрешённым уведомлениям",
+        "goal": "Integrations/hardening (T+45…65): минимальные Fly live events/review feedback и Telegram status/subscriptions/notifications, негативные тесты. ПОСЛЕДНИМ подключить Nemotron endpoint от другой сессии, выполнить реальный core-сценарий; model/runtime/GPU/run-log + Telegram receipt. Без endpoint live gate не пройден.",
         "status": "todo",
-        "timebox_minutes": 60
+        "evidence": [
+          "user 2026-09-23: Nemotron интегрируем в конце, его настраивает другая сессия; сборку начать отдельной командой после публикации плана",
+          "docs/research/build-plan-meeting-minutes.md updated handoff and stage order; no runtime success claimed"
+        ],
+        "timebox_minutes": 20
       },
       {
         "id": "S5",
-        "goal": "Проверить качество, границы доступа, экспорт и переносимость offline",
+        "goal": "Evaluation (T+65…75): замороженный кандидат, сценарий, экспорт, воспроизводимость, техническая оценка и 3 изолированных judge-pass по рубрике 25/25/25/15/10; eval.aggregate + eval.compare, без фиктивных оценок.",
         "status": "todo",
-        "timebox_minutes": 60
+        "timebox_minutes": 10
       },
       {
         "id": "S6",
-        "goal": "В финале опубликовать frontend на Vercel и проверить полный сценарий по внешней ссылке",
+        "goal": "Неприкосновенный резерв freeze/demo (T+75…120): clean-checkout cached-weights smoke, offline no-external-inference check, Vercel публикация в финале, полный E2E, bundle hash/git SHA и репетиция. Незавершённый сценарий запрещает done.",
         "status": "todo",
         "timebox_minutes": 45
       }
     ],
-    "summary": "plan: butterfly-meeting-minutes r3 stage S2 (todo)",
-    "task": "Постановочная встреча → проверяемый протокол и поручения RU/KK/mixed. Внешний frontend Vercel в финале; self-hosted inference на Brev, баланс 50 USD со слов пользователя, без личного GPU. Deadline неизвестен, timeboxes предварительные. Запрет внешних AI API; Fly и Telegram optional."
+    "summary": "plan: butterfly-meeting-minutes r10 stage S2 (doing)",
+    "task": "Поколение 2h-nemotron-tg-fly: RU/KK/mixed встреча → проверяемый протокол/поручения/PDF/DOCX; NVIDIA Nemotron self-hosted на Brev, Telegram и Fly обязательны в публичном демо. 120 минут от старта исполнения: S2 15 + S3 30 + S4 20 + S5 10 + S6 reserve 45; S0/S1 уже выполнены. Vercel в финале; Brev $50 по данным владельца, без личного GPU и внешних AI API. Старый бюджет invalidated; архив docs/research/archive/build-plan-before-2h-r4.json. Подробные gates/cuts/rollback: docs/research/build-plan-meeting-minutes.md."
   },
-  "trace_id": "hk-082aaa1a019dccdd"
+  "trace_id": "hk-e95fa1a186c3d10e"
 }

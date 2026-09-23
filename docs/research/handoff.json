@@ -1,14 +1,22 @@
 {
   "research_artifact_id": "reports/theme-research-butterfly-meeting-minutes-20260923-114307.252.md",
-  "build_plan_artifact_id": "reports/build-plan-butterfly-meeting-minutes-20260923-114419.004.md",
+  "build_plan_artifact_id": "reports/build-plan-butterfly-meeting-minutes-2h-handoff-20260923-121323.509.md",
   "plan_path": "evals/plans/butterfly-meeting-minutes.json",
   "plan_slug": "butterfly-meeting-minutes",
   "plan_status_snapshot": "docs/research/build-plan-status.json",
   "research_copy": "docs/research/theme-research-meeting-minutes.md",
   "build_plan_copy": "docs/research/build-plan-meeting-minutes.md",
   "retrieved_at": "2026-09-23",
-  "note": "Snapshot only; plan.update/plan.status own authoritative plan revisions.",
+  "note": "Tool-owned plan byte snapshot. Existing Brev session handles setup. App coding awaits a separate user command; Nemotron integration last. Old generation archived; plan.create(overwrite=true) reset revision.",
   "research_copy_note": "Publication copy omits session-specific credential diagnostics; report-envelope.json describes the original HackAlem artifact.",
   "research_copy_sha256": "4c7a2d3bf5f4b48b2c3a1b9131d10aa226a35b445236b6562d521ffa74366359",
-  "publication_note": "Markdown copies have normalized trailing blank lines; envelopes retain original MCP output metadata."
+  "publication_note": "Markdown copies have normalized trailing blank lines; envelopes retain original MCP output metadata.",
+  "plan_generation": "2h-nemotron-tg-fly",
+  "plan_revision": 10,
+  "current_stage": "S2",
+  "current_stage_status": "doing",
+  "remaining_budget_minutes": 120,
+  "finalization_reserve_minutes": 45,
+  "plan_snapshot": "docs/research/build-plan-snapshot.json",
+  "previous_plan_archive": "docs/research/archive/build-plan-before-2h-r4.json"
 }
