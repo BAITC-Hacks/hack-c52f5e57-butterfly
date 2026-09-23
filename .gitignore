@@ -10,3 +10,9 @@ data/results/
 # Tool-owned runtime; publish snapshots under docs/research instead.
 evals/
 logs/
+.venv/
+__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+data/runtime/
