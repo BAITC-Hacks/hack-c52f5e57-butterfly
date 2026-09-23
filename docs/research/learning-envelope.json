@@ -1,0 +1,15 @@
+{
+  "status": "ok",
+  "data": {
+    "confidence": 0.6,
+    "created": true,
+    "id": "l-b83da452",
+    "observations": 1,
+    "scope": "project"
+  },
+  "metrics": {
+    "confidence": 0.6,
+    "created": true
+  },
+  "trace_id": "hk-2d3b801749473e58"
+}

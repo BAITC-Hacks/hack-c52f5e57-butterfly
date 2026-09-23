@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "data": {
+    "artifact_id": "reports/build-plan-butterfly-meeting-minutes-20260923-114419.004.md",
+    "chars": 4197,
+    "preview": "# Build plan - butterfly-meeting-minutes\n\n## Contract\n\n{\n  \"input\": \"Постановочная запись встречи RU/KK/mixed, roster, дата встречи и timezone; тестовый эталон ответственных и сроков\",\n  \"command\": \"Открыть демо, загрузить запись, дождаться анализа, сопоставить спикеров, проверить поручения по цитатам и скачать PDF/DOCX\",\n  \"expected\": \"Реальный self-hosted transcript с таймкодами/спикерами; summary; action/assignee/deadline с evidence и needs_review; читаемые PDF/DOCX. Core работает без Fly/Telegram; финальный frontend на Vercel, inference на Brev.\"\n}\n\nОценки этапов предварительные: дедлайн е...",
+    "sections": 9
+  },
+  "sources": [
+    {
+      "artifact_id": "reports/build-plan-butterfly-meeting-minutes-20260923-114419.004.md",
+      "block": "report"
+    }
+  ],
+  "trace_id": "hk-661084be542af74c"
+}

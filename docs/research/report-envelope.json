@@ -1,0 +1,16 @@
+{
+  "status": "ok",
+  "data": {
+    "artifact_id": "reports/theme-research-butterfly-meeting-minutes-20260923-114307.252.md",
+    "chars": 23938,
+    "preview": "# Theme research - butterfly-meeting-minutes\n\n## Scope\n\nДата исследования: 2026-09-23. Тема: «Система автопротоколирования совещаний с фиксацией поручений». Заказчик результата — секретарь и руководитель совещания. Это исследовательский brief и передача в разработку, не отчёт о готовом продукте.\n\nПодтверждено пользователем 2026-09-23: баланс NVIDIA Brev — 50 USD; GPU пользовательского компьютера не используем; демонстрация должна работать по внешней ссылке; frontend публикуем на Vercel в конце. Баланс принят со слов владельца, не проверен через аккаунт. Требуются интеграция Fly из HackAlem и T...",
+    "sections": 7
+  },
+  "sources": [
+    {
+      "artifact_id": "reports/theme-research-butterfly-meeting-minutes-20260923-114307.252.md",
+      "block": "report"
+    }
+  ],
+  "trace_id": "hk-7af54d0547f43ca9"
+}

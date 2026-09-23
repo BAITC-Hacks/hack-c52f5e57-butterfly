@@ -1,0 +1,2 @@
+# Keep the exported source byte-for-byte for its recorded SHA256, including whitespace.
+docs/research/meeting-minutes-source.txt -text -whitespace
