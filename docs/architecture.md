@@ -1,23 +1,35 @@
-# Butterfly application
+# Architecture
 
-The app is a modular monolith: FastAPI serves the browser workspace and an
-ownership-scoped meeting API. SQLite and uploaded files live under
-`BUTTERFLY_DATA_DIR` (ignored by git). Each browser session has an opaque,
-HTTP-only owner cookie; knowing a meeting ID is not authorization.
+Go net/http serves the static frontend and ownership-scoped meeting API.
+Opaque HTTP-only session cookies isolate records; atomic JSON storage and private
+uploads live in BUTTERFLY_DATA_DIR. One process owns the data directory.
+Mutation serialization prevents duplicate confirmations and conflicting writes.
 
-The browser shows transcript segments, editable action items, evidence and job
-events. PDF/DOCX exports are generated locally. Fly visualizes the same events
-and navigates to the next review item. Telegram is a separately configured
-notification consumer; it never receives transcript contents by default.
+The provider layer calls self-hosted Nemotron HTTP and Riva gRPC via a narrow
+local SDK subprocess. It validates source quotes and keeps unknown owners/dates
+empty for human review. There is no hosted AI fallback. Speaker labels remain
+unknown unless a provider supplies them; no diarization claim is inferred.
 
-Provider adapters accept the endpoint and exact model supplied by the separate
-Brev preparation session. Unconfigured ASR leaves audio awaiting a provider;
-manual transcripts and clearly labeled synthetic demos remain usable. There is
-no automatic cloud inference fallback. Configuration presence is not a health
-or quality claim.
+Confirmed meetings export through a bounded local Python PDF/DOCX helper with
+bundled Cyrillic fonts. The HTTP service and storage remain Go. JSON stays usable
+without the export helper. Frontend is static HTML, CSS and JavaScript.
 
-Stage gates: S2 startup/health; S3 owned meeting flow and local exports; S4
-integration/error tests and provider hookup; S5 independent reviews/tests;
-S6 reproducible snapshot and demo preparation. Each stage receives its own
-commit. Live ASR/Nemotron, Telegram delivery and hosted deployment are recorded
-as unverified until their actual checks run.
+Existing HackAlem binaries run against a dedicated private data root. The stdio
+MCP bridge exposes an explicit tool allowlist, caps messages, serializes calls and
+clears hosted AI keys. Fly receives generic workflow metadata, not transcripts.
+Its existing MB 3D view is proxied through authenticated visualization routes;
+plugin control and artifact routes are not exposed. Browser Three.js is vendored.
+The fuller fly body/mesh demo requires assets absent from the installed plugin.
+
+Telegram uses the existing MCP sender with its allowlist. A user click on a
+completed owned meeting reserves a durable send record before contacting Telegram.
+Uncertain delivery is not automatically retried. Messages contain no recording,
+transcript, action text or participant details. This is a single-team configured
+chat, not a multi-tenant bot or subscription product.
+
+MCP failure does not prevent manual review or export. Its bounded event queue
+can skip audit events when full, reported in health. The monolith and its JSON
+store are a hackathon deployment, not a multi-instance production queue.
+
+Current gates distinguish local synthetic evidence, mocked provider contracts,
+the separate session's real VM smoke, and the still unverified public E2E.

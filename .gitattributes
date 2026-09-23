@@ -1,2 +1,3 @@
-# Keep the exported source byte-for-byte for its recorded SHA256, including whitespace.
-docs/research/meeting-minutes-source.txt -text -whitespace
+# Preserve upstream vendor code and license files byte-for-byte.
+frontend/vendor/** -whitespace
+butterfly/assets/fonts/LICENSE.txt -whitespace

@@ -1,45 +1,59 @@
-# Butterfly — протоколы совещаний и поручения
+# Butterfly — протоколы встреч
 
-Хакатонный проект: распознавание встреч на русском, казахском и смешанном языке,
-диаризация, выделение поручений с ответственными и сроками, экспорт PDF/DOCX.
+Go-приложение: загрузка записи или текста, поручения с цитатами, ручная проверка,
+экспорт PDF/DOCX/JSON. Интерфейс выполнен по предоставленному дизайну.
+Готовые HackAlem MCP и Fly demo подключаются как отдельные процессы.
 
-Статус: требования и исследование завершены (S0–S1). Разработка приложения,
-проверка моделей и deployment ещё впереди; репозиторий пока содержит документацию.
+## Запуск
 
-## Актуальный план
+Требуются Go 1.27+, Python 3.10+ для локального экспорта.
 
-[Двухчасовой план](docs/research/build-plan-meeting-minutes.md): Telegram и Fly
-входят в демо; Nemotron настраивает отдельная сессия и подключается в конце.
-75 минут на сборку/проверки + 45 минут на финал. Кодирование начнётся отдельной
-командой владельца. Ниже сохранено исходное описание research-этапа.
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+cp .env.example .env
+./scripts/run.sh
+```
 
-[JSON-снимок плана](docs/research/build-plan-snapshot.json) и
-[статус](docs/research/build-plan-status.json).
+Открыть `http://127.0.0.1:8000`, нажать «Демо». Данные явно помечены синтетическими.
+Для готовых MCP/Fly указать `HACKALEM_HOME` — каталог установленного HackAlem
+с `bin/hackalem-mcp` и `bin/hackalem-demo-api`. Через MCP выполняются маршрутизация,
+анонимный отчёт проверки, обратная связь Fly и явная отправка статуса в Telegram.
 
-## Материалы
+Основной backend написан на Go. Python используется только для PDF/DOCX и
+совместимости с установленным Riva SDK, а не как HTTP-сервер.
 
-- [Техническое задание](meeting-minutes-technical-specification.pdf)
-- [Исследование: решения, источники и открытые вопросы](docs/research/theme-research-meeting-minutes.md)
-- [План сборки S0–S6](docs/research/build-plan-meeting-minutes.md)
-- [Какую GPU выбрать в Brev и как расходовать бюджет](docs/deployment/brev-gpu.md)
-- [Текст ТЗ](docs/research/meeting-minutes-source.txt) и [происхождение источника](docs/research/source-metadata.json)
+## Nemotron на Brev
 
-## План размещения
+Модели уже запущены отдельной сессией. Следовать
+[актуальной инструкции интеграции](docs/deployment/nemotron-integration-handoff.md)
+и [параметрам и результатам VM](docs/deployment/runtime-handoff.json).
+ASR — Riva gRPC, LLM — локальный Nemotron HTTP API. Нельзя подставлять адрес
+`127.0.0.1` VM в конфигурацию сервера, работающего на другой машине.
 
-Frontend демо публикуется на **Vercel в финале**. Backend, файлы и self-hosted
-модели работают на отдельной GPU VM **NVIDIA Brev**. Аудио загружается из браузера
-непосредственно в backend по HTTPS. Бюджет Brev, подтверждённый владельцем, — $50.
-Личная видеокарта владельца не используется.
+В репозитории проверены синтетический сценарий, экспорт, права доступа и
+реальные процессы MCP/Fly. Другой сессией подтверждён ASR→LLM на 30 секундах
+русского аудио. Полный путь нашего приложения через Brev, публичный HTTPS backend,
+Vercel, диаризация и качество KK/mixed пока не подтверждены.
 
-Начальный стек: faster-whisper large-v3, pyannote Community-1 и Qwen3-4B.
-Качество RU/KK/mixed и время обработки требуют измерения на целевой VM.
-Fly показывает события обработки/проверки; Telegram добавляется для команд и
-разрешённых уведомлений после рабочего основного сценария.
+Для отдельного frontend: в настройках указать HTTPS backend; на backend задать
+точный `BUTTERFLY_CORS_ORIGINS`, `BUTTERFLY_COOKIE_SAMESITE=none` и
+`BUTTERFLY_SECURE_COOKIE=true`. Same-origin размещение проще для браузерных cookies.
+Telegram требует серверные `TELEGRAM_BOT_TOKEN` и `TELEGRAM_CHAT_ID` и отправляет
+только статус по кнопке пользователя; тексты встреч в сообщение не включаются.
 
-По ТЗ аудио/текст не передаются во внешние AI API. Публичное демо использует
-постановочные встречи. Возможность переноса всего стека в закрытый контур
-должна быть проверена отдельно; Telegram в этом режиме отключается.
+## Проверки
 
-JSON-файлы в `docs/research/` сохраняют provenance и снимок плана HackAlem.
-Указанные там `artifact_id` относятся к исходному workspace плагина;
-Markdown-копии отчётов доступны прямо в этом репозитории.
+```bash
+go test ./...
+go vet ./...
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/python -m pytest -q
+node --check frontend/app.js
+# При запущенном сервере, без отправки сообщений в Telegram:
+node scripts/smoke.mjs
+```
+
+Исходные аудио, секреты, runtime и протоколы пользователей не коммитятся.
+[Архитектура](docs/architecture.md), [этапы и доказательства](docs/stage-evidence.md),
+[исследование](docs/research/theme-research-meeting-minutes.md).

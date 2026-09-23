@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "status": "local_asr_and_llm_smoke_passed",
+  "health_observed_at": "2026-09-23T12:32:53.566611+00:00",
+  "report": "docs/deployment/nemotron-runtime-report.md",
+  "supersedes_runtime_status_in": [
+    "docs/deployment/nemotron-preparation-report.md"
+  ],
+  "vm": {
+    "name": "nemotron-voice-agent-402b8f",
+    "provider": "NVIDIA Brev / AWS",
+    "region_label": "Columbus",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "gpu_memory_mib_observed": 97887,
+    "nvidia_driver": "595.91.07",
+    "vcpu": 8,
+    "ram_gib": 64,
+    "disk_gib": 500,
+    "hourly_usd_displayed": 4.12,
+    "docker_version": "29.8.1",
+    "compose_version": "5.5.1"
+  },
+  "deployment": {
+    "repository": "https://github.com/NVIDIA-AI-Blueprints/nemotron-voice-agent",
+    "commit": "13801d9963aea20ac663318060824a78b28809fa",
+    "profile": "multilingual-assistant/single-gpu",
+    "additional_profile": "turn",
+    "containers_up": 4,
+    "healthy_containers_confirmed": [
+      "multilingual-assistant-single-gpu",
+      "nvidia-llm-vllm-lightning"
+    ],
+    "speech_image": "nvcr.io/nvidia/nemo-speech.cpp:0.1.0",
+    "llm_image": "vllm/vllm-openai:v0.27.1"
+  },
+  "services": {
+    "application": {
+      "host_health_url": "http://127.0.0.1:7860/health",
+      "health_http_status": 200,
+      "voice_ui_url": "https://nemotron-voice-agent-vt4eo8rll.gobrev.dev/",
+      "voice_ui_initialized": true,
+      "access": "Brev owner login required",
+      "voice_ui_languages": ["de-DE", "en-US", "es-ES", "fr-FR", "it-IT"],
+      "meeting_upload_api_implemented": false
+    },
+    "asr": {
+      "protocol": "Riva gRPC",
+      "host_endpoint": "127.0.0.1:50051",
+      "container_endpoint": "nemo-speech-multilingual:50051",
+      "tcp_reachable": true,
+      "recognize_rpc_smoke_passed": true,
+      "model_family": "Nemotron 3.5 ASR Streaming Multilingual 0.6B",
+      "model_file": "nemotron-3.5-asr-streaming-0.6b.q8_0.gguf",
+      "tested_language": "ru-RU",
+      "input_format_tested": "mono 16000 Hz signed 16-bit little-endian PCM"
+    },
+    "llm": {
+      "protocol": "OpenAI-compatible HTTP",
+      "host_base_url": "http://127.0.0.1:18000/v1",
+      "container_base_url": "http://nvidia-llm-vllm:8000/v1",
+      "host_health_url": "http://127.0.0.1:18000/health",
+      "health_http_status": 200,
+      "models_returned": ["nvidia/nemotron-3.5-lightning-30b-a3b"],
+      "chat_completions_smoke_passed": true
+    }
+  },
+  "smoke": {
+    "status": "passed",
+    "sample": "first 30 seconds of user-provided meeting 2",
+    "container_output_directory": "/tmp/meeting2-smoke-1",
+    "audio_seconds": 30.0,
+    "asr_seconds": 0.9295554129998891,
+    "asr_real_time_factor": 0.030985180433329637,
+    "transcript_characters": 455,
+    "llm_seconds": 2.03318032199968,
+    "actions_count": 1,
+    "json_shape_validated": true,
+    "action_evidence_quotes_checked_as_transcript_substrings": true,
+    "accuracy_evaluated": false,
+    "diarization_evaluated": false,
+    "clip_sha256": "4c00047efd5d9f2e2d0606e2a925e8a332b39dd9ea2f5b04f02744c1c2050776",
+    "executed_client_sha256": null,
+    "prepared_client_sha256": "fe08a1e9c37cc7611acc2a97ad9f492e265fbc21f7c9999605c3b55b83d6693d",
+    "uploaded_client_sha256": "fe08a1e9c37cc7611acc2a97ad9f492e265fbc21f7c9999605c3b55b83d6693d",
+    "client_hash_verification": "uploaded source hash asserted before docker compose cp; no independent in-container hash recorded",
+    "verification_cwd": "/home/ubuntu/nemotron-voice-agent",
+    "verification_command": "docker compose --profile multilingual-assistant/single-gpu --profile turn exec -T multilingual-assistant-single-gpu uv run --frozen python /tmp/smoke.py /tmp/meeting-2.mp3 --container-network --out /tmp/meeting2-smoke-1",
+    "verification_exit_code": 0,
+    "verification_execution": "Jupyter subprocess runner with check=True",
+    "notebook_evidence": "cell 18 completed with execution count 12; kernel idle; stdout status passed; no exception; notebook saved",
+    "private_evidence_files": ["clip.wav", "clip.json", "asr.json", "actions.json", "result.json"],
+    "vm_persistent_copy": {
+      "path": "/home/ubuntu/butterfly-test-results/meeting2-smoke-1",
+      "status": "confirmed",
+      "directory_mode": "0700",
+      "file_mode": "0600",
+      "manifest_path": "/home/ubuntu/butterfly-test-results/meeting2-smoke-1-manifest.json",
+      "manifest_mode": "0600"
+    },
+    "evidence_manifest": [
+      {"filename": "clip.json", "bytes": 212, "sha256": "86e1e6c3a5792fdfda5695ffb5c286de3714f660fa23d1a9c93e6561c08f4122"},
+      {"filename": "result.json", "bytes": 323, "sha256": "adc420d33e2b248ecf879b69d862a82db5c4855f6aa9d04dd9621ef0e5170b44"},
+      {"filename": "clip.wav", "bytes": 960136, "sha256": "4c00047efd5d9f2e2d0606e2a925e8a332b39dd9ea2f5b04f02744c1c2050776"},
+      {"filename": "actions.json", "bytes": 1379, "sha256": "eca5b24e4a32889cc1886042ea68e0e481e29a9ef5ff4889c95e382c90e713b1"},
+      {"filename": "asr.json", "bytes": 16298, "sha256": "1b44ab2d82438cbd9df6a222878e8c8e4ad6cc0184dd1711d2a2dc7f1f570e4d"}
+    ]
+  },
+  "data_handling": {
+    "smoke_inference_route": "local Compose network on the selected Brev VM",
+    "nvidia_api_key_cleared": true,
+    "external_inference_fallback_key_present": false,
+    "app_container_env_checked_at": "2026-09-23T12:36:29.245465+00:00",
+    "app_container_external_nvidia_api_key_set": false,
+    "host_env_file_mode": "0600",
+    "new_public_raw_model_endpoints_added": false,
+    "offline_execution_verified": false,
+    "transcripts_and_recordings_in_public_report": false
+  },
+  "suggested_meeting_adapter_environment": {
+    "status": "proposed variable names for the future adapter; not upstream configuration variables",
+    "host_process": {
+      "RIVA_ASR_ENDPOINT": "127.0.0.1:50051",
+      "LOCAL_LLM_BASE_URL": "http://127.0.0.1:18000/v1",
+      "LOCAL_LLM_MODEL": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "ASR_LANGUAGE": "ru-RU"
+    },
+    "same_compose_network": {
+      "RIVA_ASR_ENDPOINT": "nemo-speech-multilingual:50051",
+      "LOCAL_LLM_BASE_URL": "http://nvidia-llm-vllm:8000/v1",
+      "LOCAL_LLM_MODEL": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "ASR_LANGUAGE": "ru-RU"
+    }
+  },
+  "remaining_work": [
+    "Implement meeting upload and batch-processing adapter with authenticated HTTPS access",
+    "Evaluate complete recordings against the 10-action and 6-action reference protocols",
+    "Implement and evaluate diarization for the five-speaker reference scenarios",
+    "Implement and evaluate Kazakh and mixed Russian/Kazakh recognition",
+    "Validate owner attribution, relative deadlines, and PDF/DOCX export",
+    "Connect Fly and optional Telegram commands/notifications",
+    "Deploy final frontend to Vercel and verify frontend-to-backend access",
+    "Verify on-premise reproducibility and execution without external network after model acquisition"
+  ]
+}
