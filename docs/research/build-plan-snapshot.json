@@ -1,6 +1,6 @@
 {
   "slug": "butterfly-meeting-minutes",
-  "revision": 10,
+  "revision": 22,
   "task": "Поколение 2h-nemotron-tg-fly: RU/KK/mixed встреча → проверяемый протокол/поручения/PDF/DOCX; NVIDIA Nemotron self-hosted на Brev, Telegram и Fly обязательны в публичном демо. 120 минут от старта исполнения: S2 15 + S3 30 + S4 20 + S5 10 + S6 reserve 45; S0/S1 уже выполнены. Vercel в финале; Brev $50 по данным владельца, без личного GPU и внешних AI API. Старый бюджет invalidated; архив docs/research/archive/build-plan-before-2h-r4.json. Подробные gates/cuts/rollback: docs/research/build-plan-meeting-minutes.md.",
   "mandatory_scenario": {
     "command": "После запуска собственного API/worker выполнить sh scripts/demo-smoke.sh --fixture demo/meeting-ru-kk.wav --metadata demo/meeting.json --expected demo/expected.json --profile public-demo; повторить upload → speakers → review → PDF/DOCX в UI. Команда предстоит реализации; никакой подмены inference эталоном.",
@@ -38,8 +38,8 @@
     },
     {
       "id": "S2",
-      "goal": "Подготовить выбранный Nemotron Voice Agent multilingual-assistant/single-gpu на Brev; затем переносимый meeting API/frontend и контракты проверки. Приоритет — скорость запуска готового стека.",
-      "status": "doing",
+      "goal": "Приложение в codex/butterfly-build: FastAPI health + frontend/API skeleton, конфигурация локального хранения и контракт provider adapter. S2 не требует GPU. Другая сессия ведёт Brev; Nemotron подключаем после локального сценария. Exit: bootstrap test, application startup, no-credentials health и scripts/run.sh.",
+      "status": "done",
       "evidence": [
         "reports/build-plan-butterfly-meeting-minutes-2h-nemotron-tg-fly-20260923-120728.897.md",
         "hk-97ae81a8fa68dc5a: prior S2 failed because 330-minute budget invalidated by 120-minute deadline",
@@ -51,46 +51,94 @@
         "reports/devops-report-butterfly-nemotron-launch-preparation-20260923-121151.827.md",
         "docs/deployment/brev-gpu.md",
         "user: selected Nemotron Voice Agent and provided two recordings with reference protocols",
-        "VM Running; Jupyter GPU/Docker preflight passed; HF_TOKEN input pending; no inference verified"
+        "VM Running; Jupyter GPU/Docker preflight passed; HF_TOKEN input pending; no inference verified",
+        "GitHub publication: commit 17f650d on codex/plan-2h-nemotron-tg-fly; git push succeeded 2026-09-23",
+        "Published snapshot generation 2h-nemotron-tg-fly r10; validation PASS: JSON, seven stages, 120-minute budget including 45-minute reserve, done evidence, mandatory scenario, byte-identical local snapshot and local links; staged secret scan clean",
+        "Documentation only; application coding stopped at user request. Existing separate session continues Brev preparation.",
+        "user explicitly authorized stage-by-stage implementation with commit per stage",
+        "build start 2026-09-23T12:18:37Z; 120-minute budget; reserve starts T+75 at 13:33:37Z",
+        "isolated checkout /tmp/butterfly-plan-publish branch codex/butterfly-build; frontend/backend/export tests delegated with disjoint ownership; source checkout kept intact",
+        "S0/S1 reused from saved research; core cannot send audio/text to external hosted AI APIs",
+        "S2 commit created: application skeleton, dependency lock and local run script; docs/stage-evidence.md",
+        "pytest tests/test_bootstrap.py -q: 2 passed; Python compile and sh -n passed",
+        "GET http://127.0.0.1:8765/health: 200; llm_configured=false asr_configured=false live_verified=false",
+        "Local TestClient required sandbox escalation for event-loop IPC; warning StarletteDeprecationWarning httpx TestClient; no runtime/model success claimed"
       ],
       "timebox_minutes": 15
     },
     {
       "id": "S3",
-      "goal": "Vertical slice (T+15…45): upload/хранение/manual transcript/review/PDF/DOCX на явно помеченном demo/manual input; local API-tests и экспорты. Audio без ASR честно ожидает провайдера; это не live inference.",
-      "status": "todo",
+      "goal": "Deadline recut by user: 18:00 Almaty (13:00 UTC), remaining 15 minutes. Finish Go demo/manual-review/export and PDF-based frontend now, commit S3; no scope growth.",
+      "status": "done",
       "evidence": [
         "reports/devops-report-butterfly-nemotron-launch-preparation-20260923-121151.827.md",
         "docs/deployment/brev-gpu.md",
         "user: selected Nemotron Voice Agent and provided two recordings with reference protocols",
         "VM Running; Jupyter GPU/Docker preflight passed; HF_TOKEN input pending; no inference verified",
         "user 2026-09-23: Nemotron интегрируем в конце, его настраивает другая сессия; сборку начать отдельной командой после публикации плана",
-        "docs/research/build-plan-meeting-minutes.md updated handoff and stage order; no runtime success claimed"
+        "docs/research/build-plan-meeting-minutes.md updated handoff and stage order; no runtime success claimed",
+        "S2 exit gate passed; frontend/backend/export work underway in disjoint paths",
+        "S3 contract remains local demo/manual transcript flow, real exports and ownership checks; live Nemotron integration last",
+        "user 2026-09-23: reuse plugin fly-demo and ready MCP; questions Python application stack",
+        "docs/reuse-decision.md: plugin demo-api dashboard lacks meeting API; MCP reports md/html not PDF/DOCX; MCP audio.transcribe hosted OpenAI excluded",
+        "S2 Python bootstrap checkpoint preserved in history; active HTTP runtime migrating to Go, no main branch changes",
+        "Go1.27.1 available; existing plugin bin/hackalem-mcp and bin/hackalem-demo-api ready",
+        "user: deadline 18:00, 15 minutes remaining; overrides prior 45-minute reserve",
+        "user: publish complete build to main preserving remote changes",
+        "additional frontend_styles, nemotron_integration and final_gate agents assigned bounded tasks",
+        "scripts/smoke.mjs passed against Go server: synthetic create/review/confirm/export PDF/DOCX/JSON, cross-session404, ready plugin Fly HTML and delete",
+        "10 export tests passed; node --check frontend/app.js passed",
+        "actual MCP system.context + reports.create + routing.fly_feedback produced private audit and event logs; no transcripts sent",
+        "frontend markup based on supplied design PDF; CSS final check in progress",
+        "docs/stage-evidence.md S3; Go runtime replaces Python HTTP prototype"
       ],
       "timebox_minutes": 30
     },
     {
       "id": "S4",
-      "goal": "Integrations/hardening (T+45…65): минимальные Fly live events/review feedback и Telegram status/subscriptions/notifications, негативные тесты. ПОСЛЕДНИМ подключить Nemotron endpoint от другой сессии, выполнить реальный core-сценарий; model/runtime/GPU/run-log + Telegram receipt. Без endpoint live gate не пройден.",
-      "status": "todo",
+      "goal": "Deadline cut: verify Go provider contracts for prepared Riva/Nemotron, real local MCP/Fly and mocked Telegram; performance then architecture review. Full public Brev/browser E2E and real Telegram receipt remain explicit unfinished release gates, not inferred from local tests.",
+      "status": "done",
       "evidence": [
         "user 2026-09-23: Nemotron интегрируем в конце, его настраивает другая сессия; сборку начать отдельной командой после публикации плана",
-        "docs/research/build-plan-meeting-minutes.md updated handoff and stage order; no runtime success claimed"
+        "docs/research/build-plan-meeting-minutes.md updated handoff and stage order; no runtime success claimed",
+        "user: 18:00 deadline; remaining work limited to current integration gate and main publication",
+        "Riva SDK helper + LOCAL_LLM aliases + json_object + enable_thinking=false implemented from supplied handoff",
+        "go test -race ./... and go vet ./... passed in independent review; measured coverage below default80%, no full-gate claim",
+        "CSS agent browser checked desktop overview/actions + mobile no horizontal overflow",
+        "docs/final-review.md: performance review followed by architecture review; concrete CDN and inherited POSTGRES_DSN issues fixed",
+        "go test -race ./... passed four packages; go vet ./... passed; mocked notify ownership/configuration/concurrency/uncertain delivery + Fly allowlist + CORS tests",
+        "Brev provider contract tests passed: LOCAL_LLM aliases, enable_thinking=false, json_object, finish_reason and evidence quotes; real SDK helper compiles",
+        "Full80% coverage gate not satisfied: cmd56.2%,app73.1%,integrations29.4%,mcpbridge81.0%; no readiness score claimed",
+        "Live public Brev upload and real Telegram delivery remain unverified; credentials and owner access unavailable to this checkout",
+        "S3 ac6f07c fast-forwarded to main and GitHub push started by explicit user request"
       ],
       "timebox_minutes": 20
     },
     {
       "id": "S5",
       "goal": "Evaluation (T+65…75): замороженный кандидат, сценарий, экспорт, воспроизводимость, техническая оценка и 3 изолированных judge-pass по рубрике 25/25/25/15/10; eval.aggregate + eval.compare, без фиктивных оценок.",
-      "status": "todo",
+      "status": "cut",
+      "evidence": [
+        "User hard deadline18:00 Almaty supersedes original120-minute plan; independent code review and executable gates retained, formal three-judge scoring omitted",
+        "No score invented; full80%coverage threshold and publicdeployment gate remain unmet"
+      ],
       "timebox_minutes": 10
     },
     {
       "id": "S6",
-      "goal": "Неприкосновенный резерв freeze/demo (T+75…120): clean-checkout cached-weights smoke, offline no-external-inference check, Vercel публикация в финале, полный E2E, bundle hash/git SHA и репетиция. Незавершённый сценарий запрещает done.",
-      "status": "todo",
+      "goal": "Deadline release: preserve per-stage commits, clean-checkout build/tests, source bundle hash, publish main and record honest remaining deployment gates. Original public Vercel+Brev E2E, diarization/KK quality and complete offline scenario must not be marked verified.",
+      "status": "failed",
+      "evidence": [
+        "User hard cutoff18:00Almaty; main publication authorized and S3 push confirmed",
+        "S5 formal judge scoring cut due deadline; no invented scores",
+        "Clean checkout e22518b: go build/test passed, 10 export tests passed, JS syntax passed, live Go synthetic review/export/ownership/Fly smoke passed",
+        "source archive e22518b sha2561245b966d4a797e6c580f054a4e32bd69c1d6b105b922ca0d31c5b6682e023a9",
+        "main GitHub fast-forward pushes confirmed ac6f07c and e22518b",
+        "S6 original public Vercel+Brev full E2E remains unverified; owner-only VM access and no public meeting HTTPS endpoint supplied",
+        "User requested DockerCompose and eval with three minutes remaining; bounded parallel implementation and main publication in progress; no model quality or completed deployment claim"
+      ],
       "timebox_minutes": 45
     }
   ],
-  "updated_at": "2026-09-23T12:12:16.790173583Z"
+  "updated_at": "2026-09-23T12:58:09.183315924Z"
 }

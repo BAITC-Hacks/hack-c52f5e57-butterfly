@@ -51,3 +51,24 @@ Coverage remains below the full default 80% gate; exact measurements are in the
 review. A public HTTPS Brev backend and Vercel E2E are not verified. The supplied
 other-session Riva/Nemotron smoke is preserved as historical evidence, not relabeled
 as a new application run. S3 was published to main as ac6f07c with fast-forward push.
+
+## S5 / S6 — deadline release
+
+Formal judge scoring was cut by the new hard deadline; no score was invented.
+Clean checkout of e22518b passed Go build/tests, 10 export tests, JS syntax and the
+same real-server synthetic review/export/ownership/Fly scenario. Source archive
+SHA256: 1245b966d4a797e6c580f054a4e32bd69c1d6b105b922ca0d31c5b6682e023a9.
+Both S3 and S4 commits reached GitHub main with fast-forward pushes.
+
+The original S6 public Vercel+Brev E2E gate remains failed/unverified. This release
+is runnable locally; it is not a claim that a public Brev deployment, diarization,
+KK/mixed quality or production readiness has been completed. The supplied VM
+smoke belongs to the separate model setup session.
+
+Final deadline additions: Dockerfile/compose.yaml with persistent data and optional
+existing Brev network/plugin profiles; Docker CLI unavailable, so image build and
+container startup are explicitly unverified. scripts/check.sh passed all Go race,
+build/vet, 10 Python export tests and frontend syntax. Regression eval against the
+running clean-checkout server: 15 passed, 0 failed, 0 skipped; model accuracy and
+judge scores remain unverified. GitHub Actions workflow added (remote run not yet
+observed). Fly vendored Three.js fetch/import check passed.

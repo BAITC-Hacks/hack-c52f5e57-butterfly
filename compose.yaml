@@ -1,0 +1,70 @@
+name: butterfly
+
+x-backend: &backend
+  build:
+    context: .
+    args:
+      INSTALL_RIVA: "${INSTALL_RIVA:-0}"
+  image: butterfly-backend:local
+  init: true
+  restart: unless-stopped
+  read_only: true
+  security_opt: ["no-new-privileges:true"]
+  cap_drop: ["ALL"]
+  tmpfs:
+    - /tmp:rw,noexec,nosuid,size=256m,mode=1777
+  ports:
+    - "127.0.0.1:${BUTTERFLY_PORT:-8000}:8000"
+  volumes:
+    - butterfly-data:/app/data
+  environment: &environment
+    BUTTERFLY_CORS_ORIGINS: "${BUTTERFLY_CORS_ORIGINS:-}"
+    BUTTERFLY_SECURE_COOKIE: "${BUTTERFLY_SECURE_COOKIE:-false}"
+    BUTTERFLY_COOKIE_SAMESITE: "${BUTTERFLY_COOKIE_SAMESITE:-lax}"
+    BUTTERFLY_PUBLIC_URL: "${BUTTERFLY_PUBLIC_URL:-http://127.0.0.1:8000}"
+    ASR_LANGUAGE: "${ASR_LANGUAGE:-ru-RU}"
+    TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN:-}"
+    TELEGRAM_CHAT_ID: "${TELEGRAM_CHAT_ID:-}"
+    TELEGRAM_ALLOWED_CHAT_IDS: "${TELEGRAM_ALLOWED_CHAT_IDS:-}"
+    TELEGRAM_ALLOWED_USER_IDS: "${TELEGRAM_ALLOWED_USER_IDS:-}"
+
+services:
+  backend:
+    <<: *backend
+  # Starts only when explicitly selected; reuses the existing Brev model network.
+  backend-brev:
+    <<: *backend
+    profiles: ["brev"]
+    build:
+      context: .
+      args:
+        INSTALL_RIVA: "1"
+    image: butterfly-backend:riva
+    environment:
+      <<: *environment
+      RIVA_ASR_ENDPOINT: "${RIVA_ASR_ENDPOINT:-nemo-speech-multilingual:50051}"
+      LOCAL_LLM_BASE_URL: "${LOCAL_LLM_BASE_URL:-http://nvidia-llm-vllm:8000/v1}"
+      LOCAL_LLM_MODEL: "${LOCAL_LLM_MODEL:-nvidia/nemotron-3.5-lightning-30b-a3b}"
+    networks: ["default", "brev-models"]
+  backend-plugin:
+    <<: *backend
+    profiles: ["plugin"]
+    environment:
+      <<: *environment
+      HACKALEM_HOME: /opt/hackalem
+    volumes:
+      - butterfly-data:/app/data
+      - type: bind
+        source: "${HACKALEM_PLUGIN_PATH:-/opt/hackalem}"
+        target: /opt/hackalem
+        read_only: true
+        bind:
+          create_host_path: false
+
+volumes:
+  butterfly-data:
+
+networks:
+  brev-models:
+    external: true
+    name: "${BREV_DOCKER_NETWORK:-nemotron-existing-network}"

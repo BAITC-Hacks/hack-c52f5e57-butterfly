@@ -57,3 +57,15 @@ node scripts/smoke.mjs
 Исходные аудио, секреты, runtime и протоколы пользователей не коммитятся.
 [Архитектура](docs/architecture.md), [этапы и доказательства](docs/stage-evidence.md),
 [исследование](docs/research/theme-research-meeting-minutes.md).
+
+## Docker и eval
+
+```bash
+docker compose up --build -d backend
+node scripts/eval.mjs --base http://127.0.0.1:8000
+```
+
+[Docker Compose / Brev profile](docs/deployment/docker.md) ·
+[Что измеряет eval](docs/evaluation.md) · локальный CI: `sh scripts/check.sh`.
+Regression eval: 15 passed, 0 failed. Docker-файлы подготовлены; запуск контейнера
+здесь не проверен, поскольку Docker CLI отсутствует.
